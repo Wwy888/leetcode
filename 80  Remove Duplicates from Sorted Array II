@@ -28,6 +28,25 @@ class Solution:
                 i += 1
               
         return i
-        
-        
+    
         根本想不出来
+        
+        两个指针：  什么时候移动指针，什么时候赋值
+ class Solution:
+    def removeDuplicates(self, nums: List[int]) -> int:
+        n = len(nums)
+        if n < 3:
+            return n
+
+        start, tail = 0, 2
+
+        for i in range(2, n):
+            if nums[i] != nums[tail - 1] or nums[i] != nums[tail - 2]:
+                nums[tail] = nums[i]
+                tail += 1
+
+        return tail
+        
+   
+    
+       
