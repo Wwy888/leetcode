@@ -49,3 +49,12 @@ class Solution:
         
     pop 和 insert 函数
     list 和array ：在python中，list 是python 的内置数据类型，list 中的数据不用完全形同，但是array 中的类型必须完全相同。
+    
+    
+    solution2:
+    def getHint(self, secret, guess):
+        A = sum(a==b for a,b in zip(secret, guess))
+        B = collections.Counter(secret) & collections.Counter(guess)
+        return "%dA%dB" % (A, sum(B.values()) - A)
+        
+        逻辑运算符 与
