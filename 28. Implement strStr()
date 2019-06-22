@@ -36,5 +36,9 @@ class Solution {
         return -1;
     }
 }
+实现indexof 功能，
+首先先判读needle是否为0， 如果是返回0
+其次，判断haystack和needle， 如果haystack 的字符和needle 的字符相等，并且索引处的位置➕needle的长度小于等于haystack 的长度，
+并且 haystack 的substring 等于needle，则返回索引的值  i;
 
 charAt() 方法，string,length() 方法，s.substring()方法；
