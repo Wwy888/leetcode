@@ -39,6 +39,9 @@ class Solution {
         return strs[0].substring(0, i);
         }
 }
+
+
+方法：
 Arrays.sort();
 string.toCharArray();
 string.substring(0,i);
