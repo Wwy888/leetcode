@@ -1,0 +1,38 @@
+Given a string s consists of upper/lower-case alphabets and empty space characters ' ', return the length of last word in the string.
+
+If the last word does not exist, return 0.
+
+Note: A word is defined as a character sequence consists of non-space characters only.
+
+Example:
+
+Input: "Hello World"
+Output: 5
+
+
+
+class Solution {
+    public int lengthOfLastWord(String s) {
+        String [] arr=s.split("\\s+");
+        if (arr.length==0){
+            return 0;
+        }
+        else return arr[arr.length-1].length();
+        
+        
+    }
+}
+
+方法： 
+length 函数 ： 什么时候加括号 什么时候不加
+length 不加括号表示属性，加括号表示方法；
+数组用length属性，字符串用length（）方法。
+
+split函数：
+ \s 表示匹配任何空白，包括空格，制表符，换页符等。\s+ 表示任意匹配多个上面的字符，\在Java中 为转义字符， 需要用\\s+来表示。
+
+
+
+
+
+
