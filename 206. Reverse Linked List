@@ -27,10 +27,10 @@ class Solution
         ListNode cur=head;
         while(cur!=null)
         {
-            nxt=cur.next;
-            cur.next=pre;
-            pre=cur;
-            cur=nxt;  
+            nxt=cur.next;   //nxt指针保存cur.next
+            cur.next=pre;   //实现翻转, cur.next指向pre
+            pre=cur;        //  挪动指针pre
+            cur=nxt;        // 挪动指针 cur;
         }
         return pre;   
     }        
