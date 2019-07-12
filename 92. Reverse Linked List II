@@ -1,0 +1,59 @@
+Reverse a linked list from position m to n. Do it in one-pass.
+
+Note: 1 ≤ m ≤ n ≤ length of list.
+
+Example:
+
+Input: 1->2->3->4->5->NULL, m = 2, n = 4
+Output: 1->4->3->2->5->NULL
+
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode reverseBetween(ListNode head, int m, int n) {
+        
+        int i; 
+        ListNode cur=head, pre=null;
+        ListNode newhead, tail;
+        if(head==null||head.next==null)
+        {
+            return head;
+        }
+      while(m>1)
+      {
+            pre=cur;
+            cur=cur.next;
+            m--;
+            n--;
+      }
+           newhead=pre;
+           tail=cur;
+        while(n>0){
+            ListNode third=cur.next;
+            cur.next=pre;
+            pre=cur;
+            cur=third;
+            n--;
+        }
+        if(newhead!=null){
+            newhead.next=pre;
+        }
+        else{
+            head=pre;
+        }
+        tail.next=cur;
+        return head;
+    }    
+        
+}
+
+方法：
+https://leetcode-cn.com/problems/reverse-linked-list-ii/solution/fan-zhuan-lian-biao-ii-by-leetcode/
+设两个指针表示翻转的头和尾，内部翻转完成后，连接上新的头部和尾部。
