@@ -1,0 +1,39 @@
+Given an arbitrary ransom note string and another string containing letters from all the magazines, write a function that will return true if the ransom note can be constructed from the magazines ; otherwise, it will return false.
+
+Each letter in the magazine string can only be used once in your ransom note.
+
+Note:
+You may assume that both strings contain only lowercase letters.
+
+canConstruct("a", "b") -> false
+canConstruct("aa", "ab") -> false
+canConstruct("aa", "aab") -> true
+
+
+
+class Solution {
+    public boolean canConstruct(String ransomNote, String magazine) {
+        int [] arr=new int [26];
+        for(char c: magazine.toCharArray()){
+            arr[c-'a']++;
+        }
+        for (char c:ransomNote.toCharArray()){
+            if(arr[c-'a']==0){
+                return false;
+            }
+            arr[c-'a']--;
+        }
+        return true;
+    }
+}
+
+方法；
+首先建立一个26个元素的数组，因为只有26个英文字母。
+
+保存magazine的元素，利用toCharArray ， 遍历magazine的元素，对应的个数加1，
+
+提取ransom Note 的元素，如果为0，说明ransom Note中有magazine没有的元素，返回 false
+如果不为0，个数减1.
+最后返回true。
+           
+            
