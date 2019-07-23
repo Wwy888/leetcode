@@ -1,0 +1,107 @@
+Given a binary tree, return the preorder traversal of its nodes' values.
+
+Example:
+
+Input: [1,null,2,3]
+   1
+    \
+     2
+    /
+   3
+
+Output: [1,2,3]
+Follow up: Recursive solution is trivial, could you do it iteratively?
+
+
+方法：
+https://blog.csdn.net/qq_41231926/article/details/82047811
+最简单的递归：
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) 
+    {
+        List <Integer> list =new ArrayList<>();
+        preorderTraversal(root,list);
+        return list;
+        
+    }
+    private void preorderTraversal(TreeNode root,List<Integer>list){
+        if(root==null)
+        {
+            return ; // 用于void 函数的返回，不返回任何值
+        }
+        list.add(root.val);
+        preorderTraversal(root.left,list);
+        preorderTraversal(root.right,list);
+    }
+}
+
+1、List list=new ArrayList()；2、ArrayListlist=new ArrayList()；
+第一种用接口接收，不能调用 ArrayListz中自定义的方法，第二种可以调用ArrayList 中自定义的方法，
+第一种是大多时候的写法，这也是面向接口编程思想，能规范使用，而且易于扩展，这是为什么呢？
+答案：List是一个接口，而ArrayList 是一个类。 ArrayList 继承并实现了List。List list = new ArrayList();
+这句创建了一个ArrayList的对象后把上溯到了List。此时它是一个List对象了，有些ArrayList有但是List没有的属性和方法，它就不能再用了。
+而ArrayList list=new ArrayList();创建一对象则保留了ArrayList的所有属性。
+为什么一般都使用 List list = new ArrayList() ,而不用 ArrayList alist = new ArrayList()呢？
+问题就在于List有多个实现类，如 LinkedList或者Vector等等，现在你用的是ArrayList，也许哪一天你需要换成其它的实现类呢？，
+这时你只要改变这一行就行了：List list = new LinkedList(); 其它使用了list地方的代码根本不需要改动。
+假设你开始用 ArrayList alist = new ArrayList(), 这下你有的改了，特别是如果你使用了 ArrayList特有的方法和属性。
+如果没有特别需求的话,最好使用List list = new ArrayList(); ,便于程序代码的重构. 这就是面向接口编程的好处。
+
+
+
+迭代，用栈实现
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public List<Integer> preorderTraversal(TreeNode root) 
+    {
+      List<Integer>list=new ArrayList<>();
+        if(root==null){
+            return list;
+        }
+        Stack<TreeNode> stack=new Stack<>();
+        stack.push(root);
+        while(!stack.isEmpty()){
+            TreeNode treenode= stack.pop();
+            list.add(treenode.val);
+            if(treenode.right!=null){
+                stack.push(treenode.right);
+            }
+            if(treenode.left!=null){
+                stack.push(treenode.left);
+            }
+        }
+        return list;
+    }
+}
+这个实现思路其实很简单，就是单纯地利用栈的后进先出性质，达到先访问当前节点的值，再访问右孩子，最后访问左孩子。
+注意，在Java中，一个Stack中入栈一个null元素，这个Stack就不为空了。因此，我们在根节点入栈前要判断一下根节点是否为空。
+同样需要遍历每一个节点，时间复杂度为O(n)，其中n为二叉树中的节点个数。空间复杂度为O(h)，其中h为树的高度。
+
+从根节点开始，如果节点不为空或者栈非空，循环以下过程：
+如果节点非空，将节点的值加入到list中， 如果节点有右孩子，将节点右孩子压入栈，节点指向其左孩子，循环直到节点为空
+如果节点为空，栈非空，则弹出栈顶节点
+
+莫里斯遍历：
+定义一个存放数据的向量 data，从根节点开始，如果当前节点非空，循环以下过程：
+
+如果当前节点没有左孩子，将当前节点的值加入到 data 中，当前节点指向其右孩子
+如果当前节点有左孩子，则寻找当前节点的前驱节点，即节点值小于该节点值并且值最大的节点，也即当前节点左子树中值最大的节点
+a) 如果前驱节点没有右孩子，前驱节点右孩子指向当前节点，将当前节点的值加入到 data 中，当前节点指向其左孩子
+b) 如果前驱节点右孩子为当前节点，当前节点指向其右孩子，前驱节点右孩子设为空（恢复原有树结构）
