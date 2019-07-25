@@ -54,3 +54,57 @@ bfs 函数：
 如果是，list 添加一个新的Array list。 因为返回的形式 [[],[,],[,]]
 list添加当前节点的值，首先获得当前层数，get（），add（）；
 再判断左右有没有新的点。
+
+
+/**  iterative
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    
+    public List<List<Integer>> levelOrder(TreeNode root) 
+    {
+        List<List<Integer>> list=new ArrayList<List<Integer>>();
+        if(root==null){
+            return list;
+        }
+        int level=0;
+        Queue<TreeNode> queue=new LinkedList<>();
+        queue.add(root);
+        while(!queue.isEmpty())
+        {
+            list.add(new ArrayList<>());
+            int level_length=queue.size();
+            for(int i=0;i<level_length;i++)
+            {
+                 TreeNode cur=queue.remove();
+                 list.get(level).add(cur.val);
+                if(cur.left!=null){
+                    queue.add(cur.left);
+                }
+                if(cur.right!=null){
+                    queue.add(cur.right);
+                }
+            }
+            level++;
+            
+        }
+     return list;
+    }
+}
+
+方法：
+非递归，
+首先判断根节点是否为空，如果是，返回空list；
+创建一个queue，加入根节点。
+开始循环，
+每到新的一层，list要添加一个新的list。
+用一个整数型变量统计queue当前元素的个数，开始循环
+弹出一个，list添加一个点的值，并判断这个点是否还有左右节点，如果有加入队列。
+当前层数的点全部弹出之后，层数加一，
+退出循环，返回list。
