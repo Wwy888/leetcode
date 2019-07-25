@@ -1,0 +1,56 @@
+Given a binary tree, return the level order traversal of its nodes' values. (ie, from left to right, level by level).
+
+For example:
+Given binary tree [3,9,20,null,null,15,7],
+    3
+   / \
+  9  20
+    /  \
+   15   7
+return its level order traversal as:
+[
+  [3],
+  [9,20],
+  [15,7]
+]
+
+
+recursive
+/**
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+     List<List<Integer>> list=new ArrayList<List<Integer>>();
+    public List<List<Integer>> levelOrder(TreeNode root) {
+        bfs(root,0);
+        return list;
+        
+    }
+    private void bfs(TreeNode node, int level){
+        if (node==null){return ;}
+       if(level==list.size()){
+           list.add(new ArrayList<>());
+       }
+        list.get(level).add(node.val);
+        if(node.left!=null){
+            bfs(node.left,level+1);
+        }
+        if(node.right!=null){
+            bfs(node.right,level+1);
+        }
+    }
+}
+
+方法：
+list<list<Integer>>  最里面是list《integer》，外面一层是list《list》，最里面的list添加 整数，外面的list 添加list。
+bfs 函数：
+判断是否是新的一层，
+如果是，list 添加一个新的Array list。 因为返回的形式 [[],[,],[,]]
+list添加当前节点的值，首先获得当前层数，get（），add（）；
+再判断左右有没有新的点。
