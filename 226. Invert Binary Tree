@@ -1,0 +1,82 @@
+Invert a binary tree.
+
+Example:
+
+Input:
+
+     4
+   /   \
+  2     7
+ / \   / \
+1   3 6   9
+Output:
+
+     4
+   /   \
+  7     2
+ / \   / \
+9   6 3   1
+Trivia:
+This problem was inspired by this original tweet by Max Howell:
+
+Google: 90% of our engineers use the software you wrote (Homebrew), but you can’t invert a binary tree on a whiteboard so f*** off.
+
+
+/**  recursive
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+        if(root!=null)
+        {
+        TreeNode temp=root.left;
+        root.left=root.right;
+        root.right=temp;
+        invertTree(root.left);
+        invertTree(root.right);
+        }
+        return root;
+    }
+}
+Recursive：
+因为只需要翻转二叉树，所以不要判读根节点下 的左右节点是否为空。
+即使是空也无所谓。空指针错误，是用空 去调用属性或着方法。
+
+ 
+/**  iterative
+ * Definition for a binary tree node.
+ * public class TreeNode {
+ *     int val;
+ *     TreeNode left;
+ *     TreeNode right;
+ *     TreeNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public TreeNode invertTree(TreeNode root) {
+      Queue<TreeNode> queue=new LinkedList<>();
+        if(root!=null){
+            queue.add(root);
+            while(!queue.isEmpty()){
+                TreeNode cur=queue.poll();
+                TreeNode temp=cur.left;
+                cur.left=cur.right;
+                cur.right=temp;
+                if(cur.left!=null){
+                    queue.add(cur.left);
+                }
+                if(cur.right!=null){
+                    queue.add(cur.right);
+                }
+            }
+        }
+        return root;  
+    }
+}
+为什么 递归不需要判读空指针，但是迭代会报错？
