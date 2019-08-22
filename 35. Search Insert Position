@@ -48,5 +48,6 @@ class Solution {
 如果target 不一定存在数组中，循环条件是low<=high ，当low>high时退出循环，   
 3.区间缩减：确定区间缩减的关键问题是确保target一直在缩减当区间之内。
 需要注意到是：right=mid 没关系，但是 left=mid 有可能导致死循环，当left 和right相邻时，
-left=mid时，如果又进入left=mid  分支，相当于区间没有缩小。但是right一定大于mid,所以不会造成死循环。
+left=mid时，如果又进入left=mid  分支，相当于区间没有缩小。
+但是right一定大于mid,所以不会造成死循环，是因为mid=left+(right-left/2) 向下取整，所以right一定大于mid,不会造成死循环。
            
