@@ -1,0 +1,43 @@
+Suppose an array sorted in ascending order is rotated at some pivot unknown to you beforehand.
+
+(i.e.,  [0,1,2,4,5,6,7] might become  [4,5,6,7,0,1,2]).
+
+Find the minimum element.
+
+You may assume no duplicate exists in the array.
+
+Example 1:
+
+Input: [3,4,5,1,2] 
+Output: 1
+Example 2:
+
+Input: [4,5,6,7,0,1,2]
+Output: 0
+
+class Solution {
+    public int findMin(int[] nums) 
+    {
+        int left=0;
+        int right=nums.length-1;
+        while(left<right)
+        {
+            int mid=left+(right-left)/2;
+            if(nums[mid]<nums[right]){
+                right=mid;
+            }
+            else{
+                left=mid+1;
+            }
+           
+        }
+         return nums[left];
+    }
+}
+
+判断最小值，
+因为数列中没有重复的元素，循环退出的条件为left=right；
+首先判断中间值和最右边的值谁大谁小，如果中间比右边小，说明右边单增，最小的一定是在左边或者中间值本身，移动右边界right=mid;
+如果中间值比右边界值大，说明最小值在右边，移动左边界，left=mid+1；（肯定不可能是中间值本身，因为有边界比中间值小，所以是left=mid+1.
+
+  
