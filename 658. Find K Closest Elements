@@ -1,0 +1,64 @@
+Given a sorted array, two integers k and x, find the k closest elements to x in the array. The result should also be sorted in ascending order. If there is a tie, the smaller elements are always preferred.
+
+Example 1:
+Input: [1,2,3,4,5], k=4, x=3
+Output: [1,2,3,4]
+Example 2:
+Input: [1,2,3,4,5], k=4, x=-1
+Output: [1,2,3,4]
+Note:
+The value k is positive and will always be smaller than the length of the sorted array.
+Length of the given array is positive and will not exceed 104
+Absolute value of elements in the array and x will not exceed 104
+
+
+
+class Solution {
+    public List<Integer> findClosestElements(int[] arr, int k, int x) {
+        List<Integer> list = new ArrayList<Integer>();
+        int left=0;
+        int right=arr.length-1;
+        int mid=0;
+        while(left+1<right){
+             mid=left+(right-left)/2;
+            if(arr[mid]<x){
+                left=mid;
+            }
+            else if(arr[mid]>x){
+                right=mid;
+            }
+            else left=mid;
+        }
+        if(Math.abs(arr[left]-x)>Math.abs(arr[right]-x)){
+            mid=right;
+        }
+        else mid=left;
+
+        left=mid-1;
+        right=mid+1;
+        k=k-1;
+        list.add(arr[mid]);
+        while(k>0)
+        {
+            if(right>=arr.length||left>=0&&right<arr.length&&Math.abs(arr[left]-x)<=Math.abs(arr[right]-x)){
+                list.add(arr[left]);
+                left=left-1;
+            }else{
+                System.out.println(right);
+                list.add(arr[right]);
+                
+                right++;
+            }    
+             k--;  
+        }
+            Collections.sort(list);
+            return list;                                                           
+    }
+}
+
+找离元素最近的点不用多少，二分法查找。
+问题的关键主要是 if(right>=arr.length||left>=0&&right<arr.length&&Math.abs(arr[left]-x)<=Math.abs(arr[right]-x))  这条循环语句，
+这包括了两个corner case， 一个是target在最右边，另一个是target最右边。
+第一种情况，如果target 在最左边，循环条件不能同时满足eft>=0&&right<arr.length&&Math.abs(arr[left]-x)<=Math.abs(arr[right]-x))，就会一直向右增加。直到k,
+而且一定是小于等于，这样确保了先添加左边其次是右边的元素。
+如果target在右边，符合if（right >=arr.length 这个条件，会从左边开始添加元素，一直到k为0； 
