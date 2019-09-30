@@ -50,4 +50,31 @@ class Solution {
 需要注意到是：right=mid 没关系，但是 left=mid 有可能导致死循环，当left 和right相邻时，
 left=mid时，如果又进入left=mid  分支，相当于区间没有缩小。
 但是right一定大于mid,所以不会造成死循环，是因为mid=left+(right-left/2) 向下取整，所以right一定大于mid,不会造成死循环。
+
+class Solution {
+    public int searchInsert(int[] nums, int target) {
+        int left=0;
+        int right=nums.length-1;
+        while(left+1<right){
+            int mid=left+(right-left)/2;
+            if(nums[mid]<target){
+                left=mid;
+            }
+            else if(nums[mid]>target){
+                right=mid;
+            }
+            else return mid;
+        }
+        if(nums[left]>=target){
+            return left;
+        }
+        else if(nums[right]<target){
+            return right+1;
+        }
+        else return left+1;
+    }
+}
+
+更容易理解，有一个corner case要考虑，就是当集合中只有一个元素的时候，不会进入循环，这时候就要考虑当nums[left]=target 的情况。返回left，
+而且如果当target小于target的时候，返回index 是left 而不是left-1；
            
