@@ -85,3 +85,38 @@ class Solution {
 如果循环条件是left+1<right
 要考虑的corner case 是如果无法进入循环怎么办，也就是说如果只有一行，此时left+1=right。 这就需要post processing。而且这一种循环要考虑清楚最后的结果是什么，两边夹逼，target可能会在left 这一行，也可能会在right这一行。
 如果是left<=right  这种情况是如果有一定会返回true，如果退出循环条件一定是不存在。
+
+
+class Solution {
+    public boolean searchMatrix(int[][] matrix, int target) {
+        if(matrix==null||matrix.length==0||matrix[0]==null||matrix[0].length==0){
+            return false;
+        }
+        int row=matrix.length;
+        int cols=matrix[0].length;
+        int left=0;
+        int right=row*cols-1;
+        int i=0;
+        int j=0;
+        while(left<=right){
+            int mid=left+(right-left)/2;
+            i=mid/cols;
+            j=mid%cols;
+            if(matrix[i][j]==target){
+                return true;
+            }
+            else if(matrix[i][j]<target){
+                left=mid+1;
+
+            }
+            else{
+                right=mid-1;
+            }
+            
+            
+        }
+        return false;
+        
+    }
+}
+第二种方法是相当于把这个二维数组展成一维数组，这种方法比较简单，比较关键的一点是把一维坐标转换成二维的坐标，这个就需要用到除法运算和取余运算。
