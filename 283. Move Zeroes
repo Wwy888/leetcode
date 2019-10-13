@@ -1,0 +1,34 @@
+Given an array nums, write a function to move all 0's to the end of it while maintaining the relative order of the non-zero elements.
+
+Example:
+
+Input: [0,1,0,3,12]
+Output: [1,3,12,0,0]
+Note:
+
+You must do this in-place without making a copy of the array.
+Minimize the total number of operations.
+
+
+class Solution {
+    public void moveZeroes(int[] nums) {
+        int left=0;
+        int right=0;
+        while(right<nums.length){
+            if(nums[right]!=0){
+                swap(nums,left,right);
+                left++;
+            }
+            right++;
+        }
+        
+    }
+    public void swap(int[] nums,int a, int b){
+        int temp=0;
+        temp=nums[a];
+        nums[a]=nums[b];
+        nums[b]=temp;
+    }
+}
+
+同向快排，如果right不是0，就和left交换，left++，
