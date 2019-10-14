@@ -1,0 +1,51 @@
+Given a linked list, swap every two adjacent nodes and return its head.
+
+You may not modify the values in the list's nodes, only nodes itself may be changed.
+
+ 
+
+Example:
+
+Given 1->2->3->4, you should return the list as 2->1->4->3.
+
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode swapPairs(ListNode head) {
+        if(head==null||head.next==null){
+            return head;
+        }
+        ListNode subhead=swapPairs(head.next.next);
+        ListNode newhead=head.next;
+        head.next.next=head;
+        head.next=subhead;
+        return newhead;
+    }
+}
+
+1->2->3->4;
+
+需要改变的是1，3，。节点所以recursion call的是head.next.next；
+base case是head==null｜｜head。next==null return head
+当前层head节点是3，
+首先要保存4节点， newhead=head.next 如果直接反向的话4节点就丢了
+然后反向，head.next.next=head；
+这个时候是4节点指向3节点，3节点应该指向返回的subhead节点,
+
+1->2  4->3;
+   |----｜
+   
+2->1  4->3; 
+
+2->1->4->3;
+
+此时返回给1节点的subhead节点就是当前层newhead节点，就是4节点。
+
+
+
