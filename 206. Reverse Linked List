@@ -46,3 +46,35 @@ class Solution
 
 一个一个向右移
 
+recursion 写法：
+/**
+ * Definition for singly-linked list.
+ * public class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) { val = x; }
+ * }
+ */
+class Solution {
+    public ListNode reverseList(ListNode head) {
+        if(head==null||head.next==null){
+            return head;
+        }
+        ListNode newhead=reverseList(head.next);
+        head.next.next=head;
+        head.next=null;
+        return newhead;
+    }
+}
+假设右6个节点，从1开始连接到6，6的后面是null。
+首先判断base case，到6节点，它的后面是null，这时候return。
+if（head==null｜｜head.next==null）return head；
+
+我开始recursion，newhead=reverseList（head.next）//wall 
+Recursion 相当于挖坑的过程，挖了一个一个坑，返回的过程相当于填坑，把一个一个坑填上。此时我开始返回6节点，返回到5那一层，此时head节点是5，
+head.next.next=head // 相当于5节点的下个节点是6，6节点的下一个节点指向5，相当于把linklist 反向。
+head.next=null；在后面添加null。
+在每一层返回上来的头节点都是6，当前层的头节点是本身。最后newhead就是返回上来的6节点。
+return newhead
+
+
