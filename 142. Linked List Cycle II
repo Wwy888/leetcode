@@ -64,3 +64,51 @@ public class Solution {
 }
 
 最简单的hashset 解法
+
+/**
+ * Definition for singly-linked list.
+ * class ListNode {
+ *     int val;
+ *     ListNode next;
+ *     ListNode(int x) {
+ *         val = x;
+ *         next = null;
+ *     }
+ * }
+ */
+public class Solution {
+    public ListNode detectCycle(ListNode head) {
+      if(head==null){
+          return head;
+      }
+        ListNode slow=head;
+        ListNode fast=head;
+        while(fast!=null&&fast.next!=null){
+            slow=slow.next;
+            fast=fast.next.next;
+            if(fast==slow){
+                while(head!=fast){
+                    head=head.next;
+                    fast=fast.next;
+                }
+                return head;
+            }
+        }
+        return null;
+    }
+}
+
+双指针解法，快指针和慢指针。如果有环，一定会相遇。问题在于判断头节点，这里就用到公式推理。
+假设慢节点走的距离是t,快节点走的距离则是2t.
+assume the distance from head to the starting point of the circle is c. the distance from starting point of the circle to
+the point where they meet is a. distance rom meet point to the staring point of the circle is b. 
+we can get the formula t=c+a; 2t=c+a+(a+b)*n;
+simplyfies it. c=(n-1)*(a+b)+b;
+which means that if a point starts from head and the point runs c. in the meantime another point stars from the meeting point and the two point gonna meet at
+the starting point of the circle. b is the distance from the meeting point to starring point of the circle.
+
+
+
+
+
+
